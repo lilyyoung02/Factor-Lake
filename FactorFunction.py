@@ -29,8 +29,8 @@ marketObject_2002 = MarketObject(data.loc[data['Year'] == 2002], 2002)
 marketObject_2003 = MarketObject(data.loc[data['Year'] == 2003], 2003)
 
 # EXAMPLE USING Factors CLASS 
-Momentum6m_2002_FLWS = Momentum6m(FLWS, marketObject_2002)
-Momentum6m_2002_AAPL = Momentum6m(AAPL, marketObject_2002)
+Momentum6m_2002_FLWS = Factors.Momentum6m(FLWS, marketObject_2002)
+Momentum6m_2002_AAPL = Factors.Momentum6m(AAPL, marketObject_2002)
 
 print(f'\n6 Month Momentum Value of FLWS in 2002: ' + str(Momentum6m_2002_FLWS))
 print(f'6 Month Momentum Value of AAPL in 2002: ' + str(Momentum6m_2002_AAPL))
