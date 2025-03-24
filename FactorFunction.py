@@ -29,6 +29,9 @@ data = data[['Ticker', 'Ending Price', 'Year']]
 marketObject_2002 = MarketObject(data.loc[data['Year'] == 2002], 2002)
 marketObject_2003 = MarketObject(data.loc[data['Year'] == 2003], 2003)
 
+print(marketObject_2002.stocks[marketObject_2002.stocks['Ticker'] == 'FLWS'])
+print(list(marketObject_2002.stocks.columns))
+
 # EXAMPLE USING Factors CLASS 
 Momentum6m_2002_FLWS = Factors.Momentum6m("FLWS", marketObject_2002)
 Momentum6m_2002_AAPL = Factors.Momentum6m("AAPL", marketObject_2002)
