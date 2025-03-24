@@ -13,7 +13,8 @@ class Factors:
         #column in excel sheet is called: 6-Mo Momentum %
        # return ticker_data['6-Mo Momentum %'].iloc[-1]
         try:
-            return market.load_data.loc[market.load_data["Ticker"] == ticker, "6-Mo Momentum %"].values[0]
+            #return market.load_data.loc[market.load_data["Ticker"] == ticker, "6-Mo Momentum %"].values[0]
+            return ticker_data['6-Mo Momentum %'].iloc[-1]
         except (KeyError, IndexError):
             return None
 
