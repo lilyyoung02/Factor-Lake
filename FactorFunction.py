@@ -18,7 +18,7 @@ class Factors:
             return None
 
 
-### USING PORTFOLIO WITH MARKET OBJECT ###
+#Creating an Example
 rdata = load_data()
 data = rdata.copy()
 data['Ticker'] = data['Ticker-Region'].dropna().apply(lambda x: x[0:x.find('-')])
@@ -28,7 +28,7 @@ data = data[['Ticker', 'Ending Price', 'Year']]
 marketObject_2002 = MarketObject(data.loc[data['Year'] == 2002], 2002)
 marketObject_2003 = MarketObject(data.loc[data['Year'] == 2003], 2003)
 
-### EXAMPLE USING PORTFOLIO CLASS ###
+# EXAMPLE USING Factors CLASS 
 Momentum6m_2002_FLWS = Momentum6m(FLWS, marketObject_2002)
 Momentum6m_2002_AAPL = Momentum6m(AAPL, marketObject_2002)
 
