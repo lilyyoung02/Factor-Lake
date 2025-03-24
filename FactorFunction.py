@@ -16,3 +16,21 @@ class Factors:
             return market.load_data.loc[market.load_data["Ticker"] == ticker, "6-Mo Momentum %"].values[0]
         except (KeyError, IndexError):
             return None
+
+
+### USING PORTFOLIO WITH MARKET OBJECT ###
+rdata = load_data()
+data = rdata.copy()
+data['Ticker'] = data['Ticker-Region'].dropna().apply(lambda x: x[0:x.find('-')])
+data['Year'] = pd.to_datetime(data['Date']).dt.year
+data = data[['Ticker', 'Ending Price', 'Year']]
+
+marketObject_2002 = MarketObject(data.loc[data['Year'] == 2002], 2002)
+marketObject_2003 = MarketObject(data.loc[data['Year'] == 2003], 2003)
+
+### EXAMPLE USING PORTFOLIO CLASS ###
+Momentum6m_2002_FLWS = Momentum6m(FLWS, marketObject_2002)
+Momentum6m_2002_AAPL = Momentum6m(AAPL, marketObject_2002)
+
+print(f'\n6 Month Momentum Value of FLWS in 2002: ' + str(Momentum6m_2002_FLWS))
+print(f'6 Month Momentum Value of AAPL in 2002: ' + str(Momentum6m_2002_AAPL))
