@@ -27,8 +27,8 @@ rdata['Ticker'] = rdata['Ticker-Region'].dropna().apply(lambda x: x.split('-')[0
 rdata['Date'] = pd.to_datetime(rdata['Date'])
 rdata['Year'] = rdata['Date'].dt.year
 
-marketObject_2002 = MarketObject(data.loc[data['Year'] == 2002], 2002)
-marketObject_2003 = MarketObject(data.loc[data['Year'] == 2003], 2003)
+marketObject_2002 = MarketObject(data.loc[rdata['Year'] == 2002], 2002)
+marketObject_2003 = MarketObject(data.loc[rdata['Year'] == 2003], 2003)
 
 print(marketObject_2002.stocks[marketObject_2002.stocks['Ticker'] == 'FLWS'])
 print(list(marketObject_2002.stocks.columns))
