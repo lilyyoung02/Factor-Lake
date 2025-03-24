@@ -18,10 +18,8 @@ class MarketObject():
         data(Dataframe):    column 1 being 'Ticker', column 2 being 'Ending Price'
         t(Datetime):        Date of market data, 
         """
-        data = data.loc[:, ~data.columns.duplicated(keep='first')]
         self.stocks = data.dropna()
-        
-        #self.stocks.rename(columns = {self.stocks.columns[0]: 'Ticker', self.stocks.columns[1]: 'Ending Price'}, inplace = True)
+        self.stocks.rename(columns = {self.stocks.columns[0]: 'Ticker', self.stocks.columns[1]: 'Ending Price', self.stocks.columns[2]: '6-Mo Momentum %'}, inplace = True)
         self.t = t
 
     def getPrice(self, ticker):
