@@ -21,11 +21,11 @@ class Factors:
 
 #Creating an Example
 rdata = load_data()
-data = rdata.copy()
-data['Ticker'] = data['Ticker-Region'].dropna().apply(lambda x: x[0:x.find('-')])
-data['Year'] = pd.to_datetime(data['Date']).dt.year
-
-#data = data[['Ticker', 'Ending Price', 'Year', ]]
+rdata.columns = rdata.columns.str.strip()
+rdata = rdata.loc[:, ~rdata.columns.duplicated()]
+rdata['Ticker'] = rdata['Ticker-Region'].dropna().apply(lambda x: x.split('-')[0].strip())
+rdata['Date'] = pd.to_datetime(rdata['Date'])
+rdata['Year'] = rdata['Date'].dt.year
 
 marketObject_2002 = MarketObject(data.loc[data['Year'] == 2002], 2002)
 marketObject_2003 = MarketObject(data.loc[data['Year'] == 2003], 2003)
