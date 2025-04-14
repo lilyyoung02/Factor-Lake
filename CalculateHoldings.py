@@ -5,6 +5,39 @@ from portfolio import Portfolio
 import pandas as pd
 import numpy as np
 
+#imports added for cleaning up the output
+import logging
+import ipywidgets as widgets
+from IPython.display import display
+
+### setting up loggin package to clean up the output and to allow user to pick level of detail of output
+logger = logging.getLogger()
+logger.handlers = []
+handler = logging.StreamHandler()
+formatter = logging.Formatter('%(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+logger.setLevel(logging.INFO)
+
+### adding custom labels to the verbosity options
+custom_to_logging = {'Main Data': 'CRITICAL', 'Summary Only': 'INFO','Detailed': 'DEBUG',}
+
+verbosity_dropdown = widgets.Dropdown(
+    options=list(custom_to_logging.keys()),
+    value='Summary Only',
+    description='Verbosity:',
+)
+
+display(verbosity_dropdown)
+
+### added to allow for the verbosity to be dynamically updated
+def update_verbosity(change):
+    new_level = custom_to_logging[change['new']]
+    logger.setLevel(getattr(logging, new_level))
+
+verbosity_dropdown.observe(update_verbosity, names='value')
+
+
 def calculate_holdings(factor, aum, market):
     # Factor values for all tickers in the market
     factor_values = {ticker: factor.get(ticker, market) for ticker in market.stocks['Ticker']}
@@ -50,7 +83,8 @@ def calculate_growth(portfolio, next_market, current_market):
                 entry_price = current_market.getPrice(ticker)
                 if entry_price is not None:
                     total_end_value += inv["number_of_shares"] * entry_price
-                    print(f"{ticker} - Missing in {next_market.t}, liquidating at entry price: {entry_price}")
+                    logger.debug(f"{ticker} - Missing in {next_market.t}, liquidating at entry price: {entry_price}")
+                    #print(f"{ticker} - Missing in {next_market.t}, liquidating at entry price: {entry_price}")
 
     # Calculate growth
     growth = (total_end_value - total_start_value) / total_start_value if total_start_value else 0
@@ -63,11 +97,13 @@ def rebalance_portfolio(data, factors, start_year, end_year, initial_aum):
     benchmark_returns = []  # Store benchmark returns for comparison
 
     for year in range(start_year, end_year):
-        print(f"\nRebalancing Portfolio for {year} based on factors...")
+        logger.critical(f"\nRebalancing Portfolio for {year} based on selected factors")
+        #print(f"\nRebalancing Portfolio for {year} based on factors...")
         market = MarketObject(data.loc[data['Year'] == year], year)
         
         yearly_portfolio = []
         for factor in factors:
+            logger.debug(f"Calculating holdings for factor: {factor.__name__}")
             factor_portfolio = calculate_holdings(
             factor=factor,
             aum=aum / len(factors),
@@ -79,7 +115,14 @@ def rebalance_portfolio(data, factors, start_year, end_year, initial_aum):
             next_market = MarketObject(data.loc[data['Year'] == year + 1], year + 1)
             growth, total_start_value, total_end_value = calculate_growth(yearly_portfolio, next_market, market)
             
-            print(f"Year {year} to {year + 1}: Growth: {growth:.2%}, Start Value: ${total_start_value:.2f}, End Value: ${total_end_value:.2f}")
+            #print(f"Year {year} to {year + 1}: Growth: {growth:.2%}, Start Value: ${total_start_value:.2f}, End Value: ${total_end_value:.2f}")
+            logger.info(
+                f"Year {year} to {year + 1}\n"
+                f"Start Value: ${total_start_value:,.2f} | "
+                f"End Value: ${total_end_value:,.2f} | "
+                f"Growth: {growth:.2%}"
+            )
+            
             aum = total_end_value  # Liquidate and reinvest
             
             # Append annual return (growth) to portfolio_returns
@@ -93,15 +136,20 @@ def rebalance_portfolio(data, factors, start_year, end_year, initial_aum):
 
     # Calculate overall growth
     overall_growth = (aum - initial_aum) / initial_aum if initial_aum else 0
-    print(f"\nFinal Portfolio Value after {end_year}: ${aum:.2f}")
-    print(f"Overall Growth from {start_year} to {end_year}: {overall_growth * 100:.2f}%")
+    
+    logger.critical(f"\nFinal Portfolio Value after {end_year}: ${aum:.2f}")
+    logger.critical(f"Overall Growth from {start_year} to {end_year}: {overall_growth * 100:.2f}%")
+    #print(f"\nFinal Portfolio Value after {end_year}: ${aum:.2f}")
+    #print(f"Overall Growth from {start_year} to {end_year}: {overall_growth * 100:.2f}%")
     
     # Calculate and print Information Ratio
     information_ratio = calculate_information_ratio(portfolio_returns, benchmark_returns)
     if information_ratio is not None:
-        print(f"Information Ratio: {information_ratio:.4f}")
+        logger.critical(f"Information Ratio: {information_ratio:.4f}")
+        #print(f"Information Ratio: {information_ratio:.4f}")
     else:
-        print("Information Ratio could not be calculated due to zero tracking error.")
+        logger.warning("Information Ratio could not be calculated due to zero tracking error.")
+        #print("Information Ratio could not be calculated due to zero tracking error.")
     
     return portfolio_returns, benchmark_returns, aum
 
