@@ -1,14 +1,12 @@
 import logging
+import sys
 
-def get_logger(name=None, level=logging.INFO):
-    logger = logging.getLogger(name)
+def get_logger(name=None):
     root_logger = logging.getLogger()
     if not root_logger.handlers:
-        handler = logging.StreamHandler()
+        handler = logging.StreamHandler(sys.stdout)  # force stdout for Colab
         formatter = logging.Formatter('%(levelname)s: %(message)s')
         handler.setFormatter(formatter)
         root_logger.addHandler(handler)
 
-    logger.setLevel(level)
-    return logger
-
+    return logging.getLogger(name)
