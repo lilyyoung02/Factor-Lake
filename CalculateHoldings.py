@@ -106,7 +106,7 @@ def rebalance_portfolio(data, factors, start_year, end_year, initial_aum):
 
     # Calculate overall growth
     overall_growth = (aum - initial_aum) / initial_aum if initial_aum else 0
-    
+    logger.debug("✅ This debug line should ALWAYS print inside rebalance_portfolio")
     logger.critical(f"\nFinal Portfolio Value after {end_year}: ${aum:.2f}")
     logger.critical(f"Overall Growth from {start_year} to {end_year}: {overall_growth * 100:.2f}%")
     
