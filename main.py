@@ -6,7 +6,7 @@ import pandas as pd
 import argparse
 
 # Use custom verbosity manager
-from VerbosityState import vb
+from verbosity_state import vb
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--verbosity', type=str, default='INFO')
