@@ -3,23 +3,15 @@ from portfolio import Portfolio
 from CalculateHoldings import rebalance_portfolio
 from UserInput import get_factors
 import pandas as pd
-from LoggerConfiguration import set_global_log_level, get_logger
 import argparse
-import logging
+
+# Use custom verbosity manager
+from VerbosityState import vb
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--verbosity', type=str, default='INFO')
 args = parser.parse_args()
-
-# Set global level *before* getting any loggers
-level = getattr(logging, args.verbosity.upper(), logging.INFO)
-set_global_log_level(level)
-
-# Now retrieve logger
-logger = get_logger(__name__)
-
-
-
+vb.set_level(args.verbosity)  # Set selected verbosity level
 
 def main():
     ### Load market data ###
