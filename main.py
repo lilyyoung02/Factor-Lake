@@ -7,29 +7,17 @@ import pandas as pd
 # Set up logging to clean up output
 import argparse
 import logging
-from LoggerConfiguration import get_logger
+from LoggerConfiguration import get_logger, setup_root_logger
 
-# Parse CLI args
 parser = argparse.ArgumentParser()
-parser.add_argument('--verbosity', type=str, default='INFO')
+parser.add_argument('--verbosity', type=str, default='INFO', help='Logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL)')
 args = parser.parse_args()
-
-# Set both root and module logger levels
 level = getattr(logging, args.verbosity.upper())
 
-# Root logger setup
-root_logger = logging.getLogger()
-if not root_logger.handlers:
-    from sys import stdout
-    handler = logging.StreamHandler(stdout)
-    formatter = logging.Formatter('[%(name)s] %(levelname)s: %(message)s')
-    handler.setFormatter(formatter)
-    root_logger.addHandler(handler)
-root_logger.setLevel(level)
-
-# Get module logger (inherits root level)
+setup_root_logger(level)
 logger = get_logger(__name__)
 logger.debug("✅ DEBUG from main.py confirmed")
+
 
 
 def main():
