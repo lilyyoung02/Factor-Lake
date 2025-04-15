@@ -3,6 +3,8 @@
 ##drive.mount('/content/drive')
 import pandas as pd
 import numpy as np
+import logging 
+
 ### CREATING FUNCTION TO LOAD DATA ###
 def load_data():
     file_path = '/content/drive/My Drive/Cayuga Fund Factor Lake/FR2000 Annual Quant Data FOR RETURN SIMULATION.xlsx'
