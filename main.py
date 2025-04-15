@@ -3,7 +3,7 @@ from portfolio import Portfolio
 from CalculateHoldings import rebalance_portfolio
 from UserInput import get_factors
 import pandas as pd
-from loggerConfiguration import get_logger
+from LoggerConfiguration import get_logger
 import logging
 import argparse
 
