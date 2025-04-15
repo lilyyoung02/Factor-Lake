@@ -8,10 +8,16 @@ import pandas as pd
 from LoggerConfiguration import get_logger
 import logging
 import argparse
+root_logger = logging.getLogger()
+if not root_logger.handlers:
+    handler = logging.StreamHandler()
+    formatter = logging.Formatter('%(levelname)s: %(message)s')
+    handler.setFormatter(formatter)
+    root_logger.addHandler(handler)
 parser = argparse.ArgumentParser()
 parser.add_argument('--verbosity', type=str, default='INFO', help='Logging level (DEBUG, INFO, CRITICAL)')
 args = parser.parse_args()
-logger = get_logger(__name__, getattr(logging, args.verbosity.upper()))
+logger = get_logger(__name__, level=getattr(logging, args.verbosity.upper()))
 
 ##FOR DEBUGGING
 logger.info(f"Logger set to level: {args.verbosity.upper()}")
