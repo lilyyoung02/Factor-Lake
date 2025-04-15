@@ -36,6 +36,7 @@ class MarketObject():
         #check to see if results are empty - molly
         if ticker_data.empty:
             logger.critical(f"{ticker} - not found in market data for {self.t} - SKIPPING")
+            print(f"print: {ticker} - not found in market data for {self.t} - SKIPPING")
             return None
         #if the data exists, return the last row's ending price - molly
         return ticker_data['Ending Price'].iloc[-1]
