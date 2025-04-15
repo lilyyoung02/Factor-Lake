@@ -20,7 +20,7 @@ class Momentum6m(Factors):
             value = ticker_data['6-Mo Momentum %'].iloc[-1]
             return value
         except (KeyError, IndexError) as e:
-            log(f"Error accessing 6-Mo Momentum % for {ticker}: {e}", level = "DEBUG)
+            log(f"Error accessing 6-Mo Momentum % for {ticker}: {e}", level="DEBUG")
             #print(f"Error accessing 6-Mo Momentum % for {ticker}: {e}")
             return None
         
