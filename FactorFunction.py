@@ -1,7 +1,7 @@
 from MarketObject import MarketObject, load_data
 import pandas as pd
 #setting up logger for clean output
-from logger_configuration import get_logger
+from LoggerConfiguration import get_logger
 import logging
 logger = get_logger(__name__, level=logging.INFO)
 
