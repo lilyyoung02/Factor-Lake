@@ -3,8 +3,8 @@
 ##drive.mount('/content/drive')
 import pandas as pd
 import numpy as np
-from LoggerConfiguration import get_logger
-logger = get_logger(__name__)
+from verbosity_state import vb
+
 ### CREATING FUNCTION TO LOAD DATA ###
 def load_data():
     file_path = '/content/drive/My Drive/Cayuga Fund Factor Lake/FR2000 Annual Quant Data FOR RETURN SIMULATION.xlsx'
@@ -33,8 +33,8 @@ class MarketObject():
         ticker_data = self.stocks.loc[self.stocks['Ticker'] == ticker]
         #check to see if results are empty - molly
         if ticker_data.empty:
-            logger.critical(f"{ticker} - not found in market data for {self.t} - SKIPPING")
-            print(f"print: {ticker} - not found in market data for {self.t} - SKIPPING")
+            vb.critical(f"{ticker} - not found in market data for {self.t} - SKIPPING")
+            #print(f"print: {ticker} - not found in market data for {self.t} - SKIPPING")
             return None
         #if the data exists, return the last row's ending price - molly
         return ticker_data['Ending Price'].iloc[-1]
