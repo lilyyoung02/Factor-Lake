@@ -3,8 +3,8 @@ import pandas as pd
 #setting up logger for clean output
 from LoggerConfiguration import get_logger
 import logging
-effective_level = logging.getLogger().getEffectiveLevel()
-logger = get_logger(__name__, level=effective_level)
+logger = get_logger(__name__, level=logging.getLogger().getEffectiveLevel())
+logger.debug("Logger configured in CalculateHoldings")
 
 class Factors:
     def get(ticker, market):
