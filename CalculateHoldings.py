@@ -8,8 +8,8 @@ import numpy as np
 #imports added for cleaning up the output
 from LoggerConfiguration import get_logger
 import logging
-effective_level = logging.getLogger().getEffectiveLevel()
-logger = get_logger(__name__, level=effective_level)
+logger = get_logger(__name__, level=logging.getLogger().getEffectiveLevel())
+logger.debug("Logger configured in CalculateHoldings")
 
 def calculate_holdings(factor, aum, market):
     # Factor values for all tickers in the market
