@@ -56,7 +56,7 @@ def calculate_growth(portfolio, next_market, current_market):
                 entry_price = current_market.getPrice(ticker)
                 if entry_price is not None:
                     total_end_value += inv["number_of_shares"] * entry_price
-                    logger.debug(f"{ticker} - Missing in {next_market.t}, liquidating at entry price: {entry_price}")
+                    logger.critical(f"{ticker} - Missing in {next_market.t}, liquidating at entry price: {entry_price}")
 
     # Calculate growth
     growth = (total_end_value - total_start_value) / total_start_value if total_start_value else 0
