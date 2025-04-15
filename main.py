@@ -22,10 +22,36 @@ else:
     log("🏁 Running full simulation (2002–2023)...", level="INFO")
 
 def main():
+    import time
+
+def main():
     print("✅ main() started", flush=True)
-    for i in range(5):
-        print(f"Simulating step {i}...", flush=True)
-        time.sleep(1)
+
+    t0 = time.time()
+    print("⏳ Loading data...", flush=True)
+    rdata = load_data()
+    print(f"✅ Data loaded in {time.time() - t0:.2f}s", flush=True)
+
+    t1 = time.time()
+    print("⏳ Preprocessing...", flush=True)
+    rdata['Ticker'] = rdata['Ticker-Region'].dropna().apply(lambda x: x.split('-')[0].strip())
+    rdata['Year'] = pd.to_datetime(rdata['Date']).dt.year
+    print(f"✅ Preprocessing done in {time.time() - t1:.2f}s", flush=True)
+
+    t2 = time.time()
+    print("⏳ Getting factors...", flush=True)
+    available_factors = [...]  # use your full list here
+    rdata = rdata[['Ticker', 'Ending Price', 'Year'] + available_factors]
+    factors = get_factors(available_factors)
+    print(f"✅ Got {len(factors)} factors in {time.time() - t2:.2f}s", flush=True)
+
+    t3 = time.time()
+    print("⏳ Rebalancing portfolio...", flush=True)
+    rebalance_portfolio(rdata, factors, start_year=2019, end_year=2020, initial_aum=1)
+    print(f"✅ Rebalance finished in {time.time() - t3:.2f}s", flush=True)
+
+    print("🟩 main() complete", flush=True)
+
     # ### Load market data ###
     # start = time.time()
     # print("Loading market data...")
