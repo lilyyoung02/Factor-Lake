@@ -7,9 +7,19 @@ from verbose import log
 
 ### CREATING FUNCTION TO LOAD DATA ###
 def load_data():
-    file_path = '/content/drive/My Drive/Cayuga Fund Factor Lake/FR2000 Annual Quant Data FOR RETURN SIMULATION.xlsx'
-    rdata = pd.read_excel(file_path, sheet_name='Data', header=2, skiprows=[3, 4])
-    return rdata
+    # file_path = '/content/drive/My Drive/Cayuga Fund Factor Lake/FR2000 Annual Quant Data FOR RETURN SIMULATION.xlsx'
+    # rdata = pd.read_excel(file_path, sheet_name='Data', header=2, skiprows=[3, 4])
+    # return rdata
+    local_path = '/content/FR2000_cached.xlsx'
+    drive_path = '/content/drive/My Drive/Cayuga Fund Factor Lake/FR2000 Annual Quant Data FOR RETURN SIMULATION.xlsx'
+
+    if not os.path.exists(local_path):
+        print("Copying Excel file from Drive...")
+        shutil.copy(drive_path, local_path)
+    else:
+        print("Using cached Excel file")
+
+    return pd.read_excel(local_path, sheet_name='Data', header=2, skiprows=[3, 4])
 class MarketObject():
     def __init__(self, data, t):
         """
