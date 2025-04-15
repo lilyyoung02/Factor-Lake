@@ -5,7 +5,7 @@ import pandas as pd
 import numpy as np
 from LoggerConfiguration import get_logger
 import logging
-logger = get_logger(__name__)
+logger = get_logger(__name__, level=logging.getLogger().level)
 
 ### CREATING FUNCTION TO LOAD DATA ###
 def load_data():
