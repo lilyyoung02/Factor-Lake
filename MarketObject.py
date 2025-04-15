@@ -3,10 +3,10 @@
 ##drive.mount('/content/drive')
 import pandas as pd
 import numpy as np
+#imports added for cleaning up the output
 from LoggerConfiguration import get_logger
 import logging
-logger = get_logger(__name__, level=logging.getLogger().getEffectiveLevel())
-logger.debug("Logger configured in FactorLake")
+logger = get_logger(__name__)
 
 ### CREATING FUNCTION TO LOAD DATA ###
 def load_data():
