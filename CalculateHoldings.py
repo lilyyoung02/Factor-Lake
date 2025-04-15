@@ -55,7 +55,7 @@ def calculate_growth(portfolio, next_market, current_market):
                 entry_price = current_market.getPrice(ticker)
                 if entry_price is not None:
                     total_end_value += inv["number_of_shares"] * entry_price
-                    logger.debug(f"{ticker} - Missing in {next_market.t}, liquidating at entry price: {entry_price}")
+                    logger.critical(f"{ticker} - Missing in {next_market.t}, liquidating at entry price: {entry_price}")
                     #print(f"{ticker} - Missing in {next_market.t}, liquidating at entry price: {entry_price}")
 
     # Calculate growth
@@ -75,7 +75,7 @@ def rebalance_portfolio(data, factors, start_year, end_year, initial_aum):
         
         yearly_portfolio = []
         for factor in factors:
-            logger.debug(f"Calculating holdings for factor: {factor.__class__.__name__}")
+            logger.critical(f"Calculating holdings for factor: {factor.__class__.__name__}")
             #print(f"Calculating holdings for factor: {factor.__name__}")
             factor_portfolio = calculate_holdings(
             factor=factor,
