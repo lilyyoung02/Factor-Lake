@@ -3,7 +3,7 @@
 ##drive.mount('/content/drive')
 import pandas as pd
 import numpy as np
-from verbosity_state import vb
+from verbose import log
 
 ### CREATING FUNCTION TO LOAD DATA ###
 def load_data():
@@ -33,7 +33,7 @@ class MarketObject():
         ticker_data = self.stocks.loc[self.stocks['Ticker'] == ticker]
         #check to see if results are empty - molly
         if ticker_data.empty:
-            vb.critical(f"{ticker} - not found in market data for {self.t} - SKIPPING")
+            log(f"{ticker} - not found in market data for {self.t} - SKIPPING", level = "DEBUG)
             #print(f"print: {ticker} - not found in market data for {self.t} - SKIPPING")
             return None
         #if the data exists, return the last row's ending price - molly
