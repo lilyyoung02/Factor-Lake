@@ -118,7 +118,7 @@ def rebalance_portfolio(data, factors, start_year, end_year, initial_aum):
         log(f"Information Ratio: {information_ratio:.4f}", level = "CRITICAL")
         #print(f"Information Ratio: {information_ratio:.4f}")
     else:
-        log"Information Ratio could not be calculated due to zero tracking error.", level = "CRITICAL")
+        log("Information Ratio could not be calculated due to zero tracking error.", level = "CRITICAL")
         #print("Information Ratio could not be calculated due to zero tracking error.")
     
     return portfolio_returns, benchmark_returns, aum
