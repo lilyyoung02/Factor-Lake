@@ -103,8 +103,8 @@ def rebalance_portfolio(data, factors, start_year, end_year, initial_aum):
         
         yearly_portfolio = []
         for factor in factors:
-            #logger.debug(f"Calculating holdings for factor: {factor.__name__}")
-            print(f"Calculating holdings for factor: {factor.__name__}")
+            logger.debug(f"Calculating holdings for factor: {factor.__class__.__name__}")
+            #print(f"Calculating holdings for factor: {factor.__name__}")
             factor_portfolio = calculate_holdings(
             factor=factor,
             aum=aum / len(factors),
