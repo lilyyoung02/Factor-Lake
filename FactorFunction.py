@@ -2,6 +2,24 @@ from MarketObject import MarketObject, load_data
 import pandas as pd
 import logging 
 
+### setting up loggin package to clean up the output and to allow user to pick level of detail of output
+logger = logging.getLogger()
+logger.handlers = []
+handler = logging.StreamHandler()
+formatter = logging.Formatter('%(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+logger.setLevel(logging.INFO)
+
+### adding custom labels to the verbosity options
+custom_to_logging = {'Main Data': 'CRITICAL', 'Summary Only': 'INFO','Detailed': 'DEBUG',}
+
+verbosity_dropdown = widgets.Dropdown(
+    options=list(custom_to_logging.keys()),
+    value='Summary Only',
+    description='Verbosity:',
+)
+
 class Factors:
     def get(ticker, market):
         return "Factor not specified"
