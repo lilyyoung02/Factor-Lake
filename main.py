@@ -1,38 +1,25 @@
 import time
-print("✅ main() reached!", flush=True)
+print("✅ main.py reached!", flush=True)
 time.sleep(1)
 
 from MarketObject import load_data, MarketObject
 from portfolio import Portfolio
 from CalculateHoldings import rebalance_portfolio
 from UserInput import get_factors
+from verbose import log 
 import pandas as pd
-import argparse
-# Use custom verbosity manager
-from verbosity_state import vb
 
-# parser = argparse.ArgumentParser()
-# parser.add_argument('--verbosity', type=str, default='INFO')
-# args = parser.parse_args()
-# vb.set_level(args.verbosity)  # Set selected verbosity level
-parser = argparse.ArgumentParser()
-parser.add_argument('--verbosity', type=str, default='INFO')
-parser.add_argument('--fasttest', action='store_true', help='Run a short simulation')  # ✅ this line is key
-args = parser.parse_args()
+# Year range logic (hardcoded for now — optional to toggle fasttest inside Colab)
+FASTTEST = True
 
-# vb.set_level(args.verbosity)
-print("✅ vb.set_level step reached", flush=True)
-
-# Year range logic
-if args.fasttest:
+if FASTTEST:
     start_year = 2019
     end_year = 2022
-    vb.info("⚡ Running in FAST mode (2019–2022)...")
+    log("⚡ Running in FAST mode (2019–2022)...", level="INFO")
 else:
     start_year = 2002
     end_year = 2023
-
-print(f"[args] verbosity={args.verbosity} | fasttest={args.fasttest}", flush=True)
+    log("🏁 Running full simulation (2002–2023)...", level="INFO")
 
 def main():
     print("✅ Entered main()", flush=True)
