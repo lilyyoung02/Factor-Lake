@@ -3,16 +3,14 @@ from portfolio import Portfolio
 from CalculateHoldings import rebalance_portfolio
 from UserInput import get_factors
 import pandas as pd
+
+# Set up logging to clean up output
 from logger_configuration import get_logger
 import logging
 import argparse
-
-
-# Set up logging
 parser = argparse.ArgumentParser()
 parser.add_argument('--verbosity', type=str, default='INFO', help='Logging level (DEBUG, INFO, CRITICAL)')
 args = parser.parse_args()
-
 logger = get_logger(__name__, getattr(logging, args.verbosity.upper()))
 
 
