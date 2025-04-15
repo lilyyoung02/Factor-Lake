@@ -5,34 +5,32 @@ from UserInput import get_factors
 import pandas as pd
 
 # Set up logging to clean up output
-import logging
-import sys import stdout
-from LoggerConfiguration import get_logger
 import argparse
+import logging
+from LoggerConfiguration import get_logger
 
-# Ensure root logger has a stream handler
-root_logger = logging.getLogger()
-if not root_logger.handlers:
-    handler = logging.StreamHandler(stdout)
-    formatter = logging.Formatter('[%(name)s] %(levelname)s: %(message)s')
-    handler.setFormatter(formatter)
-    root_logger.addHandler(handler)
-
-# Parse verbosity level
+# Parse CLI args
 parser = argparse.ArgumentParser()
 parser.add_argument('--verbosity', type=str, default='INFO')
 args = parser.parse_args()
 
-# Set the global logging level
-root_logger.setLevel(getattr(logging, args.verbosity.upper()))
+# Set both root and module logger levels
+level = getattr(logging, args.verbosity.upper())
 
-# Now use logger as usual
+# Root logger setup
+root_logger = logging.getLogger()
+if not root_logger.handlers:
+    from sys import stdout
+    handler = logging.StreamHandler(stdout)
+    formatter = logging.Formatter('[%(name)s] %(levelname)s: %(message)s')
+    handler.setFormatter(formatter)
+    root_logger.addHandler(handler)
+root_logger.setLevel(level)
+
+# Get module logger (inherits root level)
 logger = get_logger(__name__)
-logger.debug("Main debug works ✅")
+logger.debug("✅ DEBUG from main.py confirmed")
 
-##FOR DEBUGGING
-logger.info(f"Logger set to level: {args.verbosity.upper()}")
-logger.debug("Debug log check from main.py")
 
 def main():
     ### Load market data ###
