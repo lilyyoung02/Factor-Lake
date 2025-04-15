@@ -247,7 +247,7 @@ class NextYrActiveReturn(Factors):
             value = ticker_data['Next-Year\'s Active Return %'].iloc[-1]
             return value
         except (KeyError, IndexError) as e:
-            log(f"Error accessing Next-Year's Active Return % for {ticker}: {e}"), level = "DEBUG")
+            log(f"Error accessing Next-Year's Active Return % for {ticker}: {e}", level = "DEBUG")
             return None
 
 #Creating an Example
