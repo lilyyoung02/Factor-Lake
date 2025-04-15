@@ -3,19 +3,8 @@
 ##drive.mount('/content/drive')
 import pandas as pd
 import numpy as np
-import logging 
-
-# Set up logger
-logger = logging.getLogger()
-logger.setLevel(logging.INFO)
-logging.basicConfig(format='%(message)s')
-
-# Create dropdown for verbosity level
-vcustom_to_logging = {
-    'Main Data': 'CRITICAL',
-    'Summary Only': 'INFO',
-    'Detailed': 'DEBUG'
-}
+from logger_config import get_logger
+logger = get_logger(__name__, level=logging.INFO)
 
 ### CREATING FUNCTION TO LOAD DATA ###
 def load_data():
