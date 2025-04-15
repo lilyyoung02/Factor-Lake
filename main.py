@@ -16,6 +16,7 @@ logger = get_logger(__name__, getattr(logging, args.verbosity.upper()))
 logger.info(f"Logger set to level: {args.verbosity.upper()}")
 logger.debug("Debug log check")
 logger.critical("Critical log check")
+logger.debug("FactorFunction logger level: DEBUG confirmed")
 
 
 def main():
