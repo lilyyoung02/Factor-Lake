@@ -1,5 +1,6 @@
 from MarketObject import MarketObject, load_data
 import pandas as pd
+import logging 
 
 class Factors:
     def get(ticker, market):
@@ -11,13 +12,15 @@ class Momentum6m(Factors):
 
         #check to see if results are empty - molly
         if ticker_data.empty:
-            print(f"{ticker} - not found in market data for {market.t} - SKIPPING")
+            logger.debug(f"{ticker} - not found in market data for {market.t} - SKIPPING")
+            #print(f"{ticker} - not found in market data for {market.t} - SKIPPING")
             return None
         #column in excel sheet is called: 6-Mo Momentum %
         try:
             value = ticker_data['6-Mo Momentum %'].iloc[-1]
             return value
         except (KeyError, IndexError) as e:
+            #logger.debug(f"Error accessing 6-Mo Momentum % for {ticker}: {e}")
             print(f"Error accessing 6-Mo Momentum % for {ticker}: {e}")
             return None
 
@@ -27,7 +30,8 @@ class ROE(Factors):
 
         #check to see if results are empty - molly
         if ticker_data.empty:
-            print(f"{ticker} - not found in market data for {market.t} - SKIPPING")
+            logger.debug(f"{ticker} - not found in market data for {market.t} - SKIPPING")
+            #print(f"{ticker} - not found in market data for {market.t} - SKIPPING")
             return None
         #column in excel sheet is called: 6-Mo Momentum %
         try:
@@ -43,7 +47,8 @@ class ROA(Factors):
 
         #check to see if results are empty - molly
         if ticker_data.empty:
-            print(f"{ticker} - not found in market data for {market.t} - SKIPPING")
+            logger.debug(f"{ticker} - not found in market data for {market.t} - SKIPPING")
+            #print(f"{ticker} - not found in market data for {market.t} - SKIPPING")
             return None
         #column in excel sheet is called: 6-Mo Momentum %
         try:
