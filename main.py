@@ -14,12 +14,12 @@ from verbosity_state import vb
 # vb.set_level(args.verbosity)  # Set selected verbosity level
 parser = argparse.ArgumentParser()
 parser.add_argument('--verbosity', type=str, default='INFO')
-parser.add_argument('--fasttest', action='store_true', help='Run a short simulation')
+parser.add_argument('--fasttest', action='store_true', help='Run a short simulation')  # ✅ this line is key
 args = parser.parse_args()
 
 vb.set_level(args.verbosity)
 
-# Set years depending on --fasttest flag
+# Year range logic
 if args.fasttest:
     start_year = 2019
     end_year = 2022
@@ -27,6 +27,7 @@ if args.fasttest:
 else:
     start_year = 2002
     end_year = 2023
+
 
 
 def main():
