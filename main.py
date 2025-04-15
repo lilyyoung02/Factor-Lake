@@ -12,6 +12,10 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--verbosity', type=str, default='INFO', help='Logging level (DEBUG, INFO, CRITICAL)')
 args = parser.parse_args()
 logger = get_logger(__name__, getattr(logging, args.verbosity.upper()))
+##FOR DEBUGGING
+logger.info(f"Logger set to level: {args.verbosity.upper()}")
+logger.debug("Debug log check")
+logger.critical("Critical log check")
 
 
 def main():
