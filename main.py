@@ -20,7 +20,8 @@ parser.add_argument('--verbosity', type=str, default='INFO')
 parser.add_argument('--fasttest', action='store_true', help='Run a short simulation')  # ✅ this line is key
 args = parser.parse_args()
 
-vb.set_level(args.verbosity)
+# vb.set_level(args.verbosity)
+print("✅ vb.set_level step reached", flush=True)
 
 # Year range logic
 if args.fasttest:
@@ -31,9 +32,10 @@ else:
     start_year = 2002
     end_year = 2023
 
-
+print(f"[args] verbosity={args.verbosity} | fasttest={args.fasttest}", flush=True)
 
 def main():
+    print("✅ Entered main()", flush=True)
     ### Load market data ###
     print("Loading market data...")
     rdata = load_data()
