@@ -3,6 +3,22 @@ from portfolio import Portfolio
 from CalculateHoldings import rebalance_portfolio
 from FactorFunction import Momentum6m, ROE, ROA
 import pandas as pd
+import logging
+import argparse
+### ADDING LOGGER INFO TO ALLOW FOR DYNAMIC UPDATES
+parser = argparse.ArgumentParser()
+parser.add_argument('--verbosity', type=str, default='INFO')
+args = parser.parse_args()
+
+# Set up logging
+logger = logging.getLogger()
+logger.handlers = []
+handler = logging.StreamHandler()
+formatter = logging.Formatter('%(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+logger.setLevel(getattr(logging, args.verbosity.upper()))
+
 
 def main():
     ### Load market data ###
