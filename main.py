@@ -5,7 +5,7 @@ from UserInput import get_factors
 import pandas as pd
 
 # Set up logging to clean up output
-from logger_configuration import get_logger
+from LoggerConfiguration import get_logger
 import logging
 import argparse
 parser = argparse.ArgumentParser()
