@@ -3,7 +3,7 @@
 ##drive.mount('/content/drive')
 import pandas as pd
 import numpy as np
-from logger_configuration import get_logger
+from LoggerConfiguration import get_logger
 import logging
 logger = get_logger(__name__, level=logging.INFO)
 
