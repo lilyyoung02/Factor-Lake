@@ -5,6 +5,18 @@ import pandas as pd
 import numpy as np
 import logging 
 
+# Set up logger
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+logging.basicConfig(format='%(message)s')
+
+# Create dropdown for verbosity level
+vcustom_to_logging = {
+    'Main Data': 'CRITICAL',
+    'Summary Only': 'INFO',
+    'Detailed': 'DEBUG'
+}
+
 ### CREATING FUNCTION TO LOAD DATA ###
 def load_data():
     file_path = '/content/drive/My Drive/Cayuga Fund Factor Lake/FR2000 Annual Quant Data FOR RETURN SIMULATION.xlsx'
