@@ -4,7 +4,7 @@ import pandas as pd
 from LoggerConfiguration import get_logger
 import logging
 logger = get_logger(__name__, level=logging.getLogger().getEffectiveLevel())
-logger.debug("Logger configured in CalculateHoldings")
+logger.debug("Logger configured in FactorFunction")
 
 class Factors:
     def get(ticker, market):
