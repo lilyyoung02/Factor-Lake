@@ -2,6 +2,18 @@ from MarketObject import MarketObject, load_data
 import pandas as pd
 import logging 
 
+# Set up logger
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+logging.basicConfig(format='%(message)s')
+
+# Create dropdown for verbosity level
+vcustom_to_logging = {
+    'Main Data': 'CRITICAL',
+    'Summary Only': 'INFO',
+    'Detailed': 'DEBUG'
+}
+
 class Factors:
     def get(ticker, market):
         return "Factor not specified"
