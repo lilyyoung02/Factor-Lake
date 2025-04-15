@@ -1,10 +1,13 @@
+import time
+print("✅ main() reached!", flush=True)
+time.sleep(1)
+
 from MarketObject import load_data, MarketObject
 from portfolio import Portfolio
 from CalculateHoldings import rebalance_portfolio
 from UserInput import get_factors
 import pandas as pd
 import argparse
-
 # Use custom verbosity manager
 from verbosity_state import vb
 
