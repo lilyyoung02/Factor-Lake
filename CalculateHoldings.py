@@ -59,130 +59,70 @@ def calculate_growth(portfolio, next_market, current_market):
     growth = (total_end_value - total_start_value) / total_start_value if total_start_value else 0
     return growth, total_start_value, total_end_value
 
-# def rebalance_portfolio(data, factors, start_year, end_year, initial_aum):
-#     aum = initial_aum
-#     years = []
-#     portfolio_returns = []  # Store yearly returns for Information Ratio
-#     benchmark_returns = []  # Store benchmark returns for comparison
-
-#     for year in range(start_year, end_year):
-#         vb.critical(f"\nRebalancing Portfolio for {year} based on selected factors")
-#         #print(f"\nRebalancing Portfolio for {year} based on factors...")
-#         market = MarketObject(data.loc[data['Year'] == year], year)
-        
-#         yearly_portfolio = []
-#         for factor in factors:
-#             vb.critical(f"Calculating holdings for factor: {factor.__class__.__name__}")
-#             #print(f"Calculating holdings for factor: {factor.__name__}")
-#             factor_portfolio = calculate_holdings(
-#             factor=factor,
-#             aum=aum / len(factors),
-#             market=market
-#             )
-#             yearly_portfolio.append(factor_portfolio)
-        
-#         if year < end_year:
-#             next_market = MarketObject(data.loc[data['Year'] == year + 1], year + 1)
-#             growth, total_start_value, total_end_value = calculate_growth(yearly_portfolio, next_market, market)
-            
-#             #print(f"Year {year} to {year + 1}: Growth: {growth:.2%}, Start Value: ${total_start_value:.2f}, End Value: ${total_end_value:.2f}")
-#             vb.info(
-#                 f"Year {year} to {year + 1}\n"
-#                 f"Start Value: ${total_start_value:,.2f} | "
-#                 f"End Value: ${total_end_value:,.2f} | "
-#                 f"Growth: {growth:.2%}"
-#             )
-            
-#             aum = total_end_value  # Liquidate and reinvest
-            
-#             # Append annual return (growth) to portfolio_returns
-#             portfolio_returns.append(growth)
-
-#             # Get benchmark return for the year (replace it as needed)
-#             benchmark_return = get_benchmark_return(year)  # Define this function based on benchmark data
-#             benchmark_returns.append(benchmark_return)
-
-#         years.append(year)
-
-#     # Calculate overall growth
-#     overall_growth = (aum - initial_aum) / initial_aum if initial_aum else 0
-    
-#     vb.critical(f"\nFinal Portfolio Value after {end_year}: ${aum:.2f}")
-#     vb.critical(f"Overall Growth from {start_year} to {end_year}: {overall_growth * 100:.2f}%")
-#     #print(f"\nFinal Portfolio Value after {end_year}: ${aum:.2f}")
-#     #print(f"Overall Growth from {start_year} to {end_year}: {overall_growth * 100:.2f}%")
-    
-#     # Calculate and print Information Ratio
-#     information_ratio = calculate_information_ratio(portfolio_returns, benchmark_returns)
-#     if information_ratio is not None:
-#         vb.critical(f"Information Ratio: {information_ratio:.4f}")
-#         #print(f"Information Ratio: {information_ratio:.4f}")
-#     else:
-#         vb.warning("Information Ratio could not be calculated due to zero tracking error.")
-#         #print("Information Ratio could not be calculated due to zero tracking error.")
-    
-#     return portfolio_returns, benchmark_returns, aum
-import time
-import numpy as np
-from portfolio import Portfolio
-from MarketObject import MarketObject
-from verbosity_state import vb  # custom verbosity
-
 def rebalance_portfolio(data, factors, start_year, end_year, initial_aum):
-    vb.info(f"🧮 Starting portfolio rebalancing from {start_year} to {end_year}...")
-    total_start = time.time()
-
     aum = initial_aum
     years = []
-    portfolio_returns = []
-    benchmark_returns = []
+    portfolio_returns = []  # Store yearly returns for Information Ratio
+    benchmark_returns = []  # Store benchmark returns for comparison
 
     for year in range(start_year, end_year):
-        year_start = time.time()
-        vb.critical(f"\n📆 Rebalancing for {year}")
-
+        vb.critical(f"\nRebalancing Portfolio for {year} based on selected factors")
+        #print(f"\nRebalancing Portfolio for {year} based on factors...")
         market = MarketObject(data.loc[data['Year'] == year], year)
+        
         yearly_portfolio = []
-
         for factor in factors:
-            vb.debug(f"➡️ Calculating holdings for factor: {factor.__class__.__name__}")
+            vb.critical(f"Calculating holdings for factor: {factor.__class__.__name__}")
+            #print(f"Calculating holdings for factor: {factor.__name__}")
             factor_portfolio = calculate_holdings(
-                factor=factor,
-                aum=aum / len(factors),
-                market=market
+            factor=factor,
+            aum=aum / len(factors),
+            market=market
             )
             yearly_portfolio.append(factor_portfolio)
+        
+        if year < end_year:
+            next_market = MarketObject(data.loc[data['Year'] == year + 1], year + 1)
+            growth, total_start_value, total_end_value = calculate_growth(yearly_portfolio, next_market, market)
+            
+            #print(f"Year {year} to {year + 1}: Growth: {growth:.2%}, Start Value: ${total_start_value:.2f}, End Value: ${total_end_value:.2f}")
+            vb.info(
+                f"Year {year} to {year + 1}\n"
+                f"Start Value: ${total_start_value:,.2f} | "
+                f"End Value: ${total_end_value:,.2f} | "
+                f"Growth: {growth:.2%}"
+            )
+            
+            aum = total_end_value  # Liquidate and reinvest
+            
+            # Append annual return (growth) to portfolio_returns
+            portfolio_returns.append(growth)
 
-        next_market = MarketObject(data.loc[data['Year'] == year + 1], year + 1)
+            # Get benchmark return for the year (replace it as needed)
+            benchmark_return = get_benchmark_return(year)  # Define this function based on benchmark data
+            benchmark_returns.append(benchmark_return)
 
-        # --- Calculate Growth ---
-        growth, start_val, end_val = calculate_growth(yearly_portfolio, next_market, market)
-        vb.info(
-            f"Year {year} → {year + 1} | "
-            f"Start: ${start_val:,.2f} | End: ${end_val:,.2f} | Growth: {growth:.2%}"
-        )
-
-        aum = end_val  # update AUM
-        portfolio_returns.append(growth)
-        benchmark_returns.append(get_benchmark_return(year))
         years.append(year)
 
-        vb.debug(f"✅ Year {year} done in {time.time() - year_start:.2f}s")
-
-    # --- Final Stats ---
+    # Calculate overall growth
     overall_growth = (aum - initial_aum) / initial_aum if initial_aum else 0
-    vb.critical(f"\n💰 Final Portfolio Value: ${aum:.2f}")
-    vb.critical(f"📈 Overall Growth: {overall_growth * 100:.2f}%")
-
-    ir = calculate_information_ratio(portfolio_returns, benchmark_returns)
-    if ir is not None:
-        vb.critical(f"📊 Information Ratio: {ir:.4f}")
+    
+    vb.critical(f"\nFinal Portfolio Value after {end_year}: ${aum:.2f}")
+    vb.critical(f"Overall Growth from {start_year} to {end_year}: {overall_growth * 100:.2f}%")
+    #print(f"\nFinal Portfolio Value after {end_year}: ${aum:.2f}")
+    #print(f"Overall Growth from {start_year} to {end_year}: {overall_growth * 100:.2f}%")
+    
+    # Calculate and print Information Ratio
+    information_ratio = calculate_information_ratio(portfolio_returns, benchmark_returns)
+    if information_ratio is not None:
+        vb.critical(f"Information Ratio: {information_ratio:.4f}")
+        #print(f"Information Ratio: {information_ratio:.4f}")
     else:
-        vb.critical("⚠️ Information Ratio could not be calculated (zero tracking error).")
-
-    vb.debug(f"⏱️ Total simulation time: {time.time() - total_start:.2f}s")
-
+        vb.warning("Information Ratio could not be calculated due to zero tracking error.")
+        #print("Information Ratio could not be calculated due to zero tracking error.")
+    
     return portfolio_returns, benchmark_returns, aum
+
 
 def get_benchmark_return(year):
     """
