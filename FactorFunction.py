@@ -3,7 +3,7 @@ import pandas as pd
 #setting up logger for clean output
 from LoggerConfiguration import get_logger
 import logging
-logger = get_logger(__name__, level=logging.INFO)
+logger = get_logger(__name__)
 
 class Factors:
     def get(ticker, market):
