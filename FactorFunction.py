@@ -15,7 +15,7 @@ class Momentum6m(Factors):
         #check to see if results are empty - molly
         if ticker_data.empty:
             logger.debug(f"{ticker} - not found in market data for {market.t} - SKIPPING")
-            #print(f"{ticker} - not found in market data for {market.t} - SKIPPING")
+            print(f"print: {ticker} - not found in market data for {market.t} - SKIPPING")
             return None
         #column in excel sheet is called: 6-Mo Momentum %
         try:
