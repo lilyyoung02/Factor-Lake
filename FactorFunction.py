@@ -1,10 +1,10 @@
 from MarketObject import MarketObject, load_data
 import pandas as pd
-#setting up logger for clean output
+
+#imports added for cleaning up the output
 from LoggerConfiguration import get_logger
 import logging
-logger = get_logger(__name__, level=logging.getLogger().getEffectiveLevel())
-logger.debug("Logger configured in FactorFunction")
+logger = get_logger(__name__)
 
 class Factors:
     def get(ticker, market):
