@@ -3,21 +3,17 @@ from portfolio import Portfolio
 from CalculateHoldings import rebalance_portfolio
 from UserInput import get_factors
 import pandas as pd
-
-# Set up logging to clean up output
-import argparse
+from loggerConfiguration import get_logger
 import logging
-from LoggerConfiguration import get_logger, setup_root_logger
+import argparse
 
+
+# Set up logging
 parser = argparse.ArgumentParser()
-parser.add_argument('--verbosity', type=str, default='INFO', help='Logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL)')
+parser.add_argument('--verbosity', type=str, default='INFO', help='Logging level (DEBUG, INFO, CRITICAL)')
 args = parser.parse_args()
-level = getattr(logging, args.verbosity.upper())
 
-setup_root_logger(level)
-logger = get_logger(__name__)
-logger.debug("✅ DEBUG from main.py confirmed")
-
+logger = get_logger(__name__, getattr(logging, args.verbosity.upper()))
 
 
 def main():
@@ -34,7 +30,7 @@ def main():
     factors = get_factors(available_factors)
 
     ### Rebalancing portfolio across years ###
-    logger.info("Rebalancing portfolio...")
+    print("Rebalancing portfolio...")
     final_portfolio = rebalance_portfolio(rdata, factors, start_year=2002, end_year=2023, initial_aum=1)
 
 if __name__ == "__main__":
