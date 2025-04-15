@@ -12,12 +12,10 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--verbosity', type=str, default='INFO', help='Logging level (DEBUG, INFO, CRITICAL)')
 args = parser.parse_args()
 logger = get_logger(__name__, getattr(logging, args.verbosity.upper()))
+
 ##FOR DEBUGGING
 logger.info(f"Logger set to level: {args.verbosity.upper()}")
-logger.debug("Debug log check")
-logger.critical("Critical log check")
-logger.debug("FactorFunction logger level: DEBUG confirmed")
-
+logger.debug("Debug log check from main.py")
 
 def main():
     ### Load market data ###
@@ -33,7 +31,7 @@ def main():
     factors = get_factors(available_factors)
 
     ### Rebalancing portfolio across years ###
-    print("Rebalancing portfolio...")
+    logger.info("Rebalancing portfolio...")
     final_portfolio = rebalance_portfolio(rdata, factors, start_year=2002, end_year=2023, initial_aum=1)
 
 if __name__ == "__main__":
