@@ -22,10 +22,12 @@ else:
     log("🏁 Running full simulation (2002–2023)...", level="INFO")
 
 def main():
-    print("✅ Entered main()", flush=True)
+    log("🟢 main() started", level="INFO")
+    
     ### Load market data ###
     print("Loading market data...")
     rdata = load_data()
+    log("✅ Data loaded", level="INFO")
 
     ### Data preprocessing ###
     print("Processing market data...")
@@ -39,6 +41,9 @@ def main():
     print("Rebalancing portfolio...")
     # final_portfolio = rebalance_portfolio(rdata, factors, start_year=2002, end_year=2023, initial_aum=1)
     final_portfolio = rebalance_portfolio(rdata, factors, start_year=start_year, end_year=end_year, initial_aum=1)
+
+    print("🟩 Script reached end of main()", flush=True)
+
 
 if __name__ == "__main__":
     main()
