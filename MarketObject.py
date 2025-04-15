@@ -33,7 +33,7 @@ class MarketObject():
         ticker_data = self.stocks.loc[self.stocks['Ticker'] == ticker]
         #check to see if results are empty - molly
         if ticker_data.empty:
-            log(f"{ticker} - not found in market data for {self.t} - SKIPPING", level = "DEBUG)
+            log(f"{ticker} - not found in market data for {self.t} - SKIPPING", level="DEBUG")
             #print(f"print: {ticker} - not found in market data for {self.t} - SKIPPING")
             return None
         #if the data exists, return the last row's ending price - molly
