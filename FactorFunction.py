@@ -1,5 +1,6 @@
 from MarketObject import MarketObject, load_data
 import pandas as pd
+#setting up logger for clean output
 from logger_configuration import get_logger
 import logging
 logger = get_logger(__name__, level=logging.INFO)
@@ -15,7 +16,6 @@ class Momentum6m(Factors):
         #check to see if results are empty - molly
         if ticker_data.empty:
             logger.debug(f"{ticker} - not found in market data for {market.t} - SKIPPING")
-            #print(f"{ticker} - not found in market data for {market.t} - SKIPPING")
             return None
         #column in excel sheet is called: 6-Mo Momentum %
         try:
@@ -23,7 +23,6 @@ class Momentum6m(Factors):
             return value
         except (KeyError, IndexError) as e:
             logger.debug(f"Error accessing 6-Mo Momentum % for {ticker}: {e}")
-            #print(f"Error accessing 6-Mo Momentum % for {ticker}: {e}")
             return None
         
 class Momentum12m(Factors):
@@ -32,14 +31,14 @@ class Momentum12m(Factors):
 
         #check to see if results are empty - molly
         if ticker_data.empty:
-            print(f"{ticker} - not found in market data for {market.t} - SKIPPING")
+            logger.debug(f"{ticker} - not found in market data for {market.t} - SKIPPING")
             return None
         #column in excel sheet is called: 6-Mo Momentum %
         try:
             value = ticker_data['12-Mo Momentum %'].iloc[-1]
             return value
         except (KeyError, IndexError) as e:
-            print(f"Error accessing 12-Mo Momentum % for {ticker}: {e}")
+            logger.debug(f"Error accessing 12-Mo Momentum % for {ticker}: {e}")
             return None
         
 class Momentum1m(Factors):
@@ -48,14 +47,14 @@ class Momentum1m(Factors):
 
         #check to see if results are empty - molly
         if ticker_data.empty:
-            print(f"{ticker} - not found in market data for {market.t} - SKIPPING")
+            logger.debug(f"{ticker} - not found in market data for {market.t} - SKIPPING")
             return None
         #column in excel sheet is called: 6-Mo Momentum %
         try:
             value = ticker_data['1-Mo Momentum %'].iloc[-1]
             return value
         except (KeyError, IndexError) as e:
-            print(f"Error accessing 1-Mo Momentum % for {ticker}: {e}")
+            logger.debug(f"Error accessing 1-Mo Momentum % for {ticker}: {e}")
             return None
 
 class ROE(Factors):
@@ -65,7 +64,6 @@ class ROE(Factors):
         #check to see if results are empty - molly
         if ticker_data.empty:
             logger.debug(f"{ticker} - not found in market data for {market.t} - SKIPPING")
-            #print(f"{ticker} - not found in market data for {market.t} - SKIPPING")
             return None
         #column in excel sheet is called: 6-Mo Momentum %
         try:
@@ -82,7 +80,6 @@ class ROA(Factors):
         #check to see if results are empty - molly
         if ticker_data.empty:
             logger.debug(f"{ticker} - not found in market data for {market.t} - SKIPPING")
-            #print(f"{ticker} - not found in market data for {market.t} - SKIPPING")
             return None
         #column in excel sheet is called: 6-Mo Momentum %
         try:
@@ -98,14 +95,14 @@ class P2B(Factors):
 
         #check to see if results are empty - molly
         if ticker_data.empty:
-            print(f"{ticker} - not found in market data for {market.t} - SKIPPING")
+            logger.debug(f"{ticker} - not found in market data for {market.t} - SKIPPING")
             return None
         #column in excel sheet is called: 6-Mo Momentum %
         try:
             value = ticker_data['Price to Book Using 9/30 Data'].iloc[-1]
             return value
         except (KeyError, IndexError) as e:
-            print(f"Error accessing Price to Book Using 9/30 Data for {ticker}: {e}")
+            logger.debug(f"Error accessing Price to Book Using 9/30 Data for {ticker}: {e}")
             return None
         
 class NextFYrEarns(Factors):
@@ -114,14 +111,14 @@ class NextFYrEarns(Factors):
 
         #check to see if results are empty - molly
         if ticker_data.empty:
-            print(f"{ticker} - not found in market data for {market.t} - SKIPPING")
+            logger.debug(f"{ticker} - not found in market data for {market.t} - SKIPPING")
             return None
         #column in excel sheet is called: 6-Mo Momentum %
         try:
             value = ticker_data['Next FY Earns/P'].iloc[-1]
             return value
         except (KeyError, IndexError) as e:
-            print(f"Error accessing Next FY Earns/P for {ticker}: {e}")
+            logger.debug(f"Error accessing Next FY Earns/P for {ticker}: {e}")
             return None
         
 class OneYrPriceVol(Factors):
@@ -130,14 +127,14 @@ class OneYrPriceVol(Factors):
 
         #check to see if results are empty - molly
         if ticker_data.empty:
-            print(f"{ticker} - not found in market data for {market.t} - SKIPPING")
+            logger.debug(f"{ticker} - not found in market data for {market.t} - SKIPPING")
             return None
         #column in excel sheet is called: 6-Mo Momentum %
         try:
             value = ticker_data['1-Yr Price Vol %'].iloc[-1]
             return value
         except (KeyError, IndexError) as e:
-            print(f"Error accessing 1-Yr Price Vol % for {ticker}: {e}")
+            logger.debug(f"Error accessing 1-Yr Price Vol % for {ticker}: {e}")
             return None
         
 class AccrualsAssets(Factors):
@@ -146,14 +143,14 @@ class AccrualsAssets(Factors):
 
         #check to see if results are empty - molly
         if ticker_data.empty:
-            print(f"{ticker} - not found in market data for {market.t} - SKIPPING")
+            logger.debug(f"{ticker} - not found in market data for {market.t} - SKIPPING")
             return None
         #column in excel sheet is called: 6-Mo Momentum %
         try:
             value = ticker_data['Accruals/Assets'].iloc[-1]
             return value
         except (KeyError, IndexError) as e:
-            print(f"Error accessing Accruals/Assets % for {ticker}: {e}")
+            logger.debug(f"Error accessing Accruals/Assets % for {ticker}: {e}")
             return None
         
 class ROAPercentage(Factors):
@@ -162,14 +159,14 @@ class ROAPercentage(Factors):
 
         #check to see if results are empty - molly
         if ticker_data.empty:
-            print(f"{ticker} - not found in market data for {market.t} - SKIPPING")
+            logger.debug(f"{ticker} - not found in market data for {market.t} - SKIPPING")
             return None
         #column in excel sheet is called: 6-Mo Momentum %
         try:
             value = ticker_data['ROA %'].iloc[-1]
             return value
         except (KeyError, IndexError) as e:
-            print(f"Error accessing ROA % for {ticker}: {e}")
+            logger.debug(f"Error accessing ROA % for {ticker}: {e}")
             return None
         
 class OneYrAssetGrowth(Factors):
@@ -178,14 +175,14 @@ class OneYrAssetGrowth(Factors):
 
         #check to see if results are empty - molly
         if ticker_data.empty:
-            print(f"{ticker} - not found in market data for {market.t} - SKIPPING")
+            logger.debug(f"{ticker} - not found in market data for {market.t} - SKIPPING")
             return None
         #column in excel sheet is called: 6-Mo Momentum %
         try:
             value = ticker_data['1-Yr Asset Growth %'].iloc[-1]
             return value
         except (KeyError, IndexError) as e:
-            print(f"Error accessing 1-Yr Asset Growth % for {ticker}: {e}")
+            logger.debug(f"Error accessing 1-Yr Asset Growth % for {ticker}: {e}")
             return None
         
 class OneYrCapEXGrowth(Factors):
@@ -194,14 +191,14 @@ class OneYrCapEXGrowth(Factors):
 
         #check to see if results are empty - molly
         if ticker_data.empty:
-            print(f"{ticker} - not found in market data for {market.t} - SKIPPING")
+            logger.debug(f"{ticker} - not found in market data for {market.t} - SKIPPING")
             return None
         #column in excel sheet is called: 6-Mo Momentum %
         try:
             value = ticker_data['1-Yr CapEX Growth %'].iloc[-1]
             return value
         except (KeyError, IndexError) as e:
-            print(f"Error accessing 1-Yr CapEX Growth % for {ticker}: {e}")
+            logger.debug(f"Error accessing 1-Yr CapEX Growth % for {ticker}: {e}")
             return None
         
 class BookPrice(Factors):
@@ -210,14 +207,14 @@ class BookPrice(Factors):
 
         #check to see if results are empty - molly
         if ticker_data.empty:
-            print(f"{ticker} - not found in market data for {market.t} - SKIPPING")
+            logger.debug(f"{ticker} - not found in market data for {market.t} - SKIPPING")
             return None
         #column in excel sheet is called: 6-Mo Momentum %
         try:
             value = ticker_data['Book/Price'].iloc[-1]
             return value
         except (KeyError, IndexError) as e:
-            print(f"Error accessing Book/Price for {ticker}: {e}")
+            logger.debug(f"Error accessing Book/Price for {ticker}: {e}")
             return None
         
 class NextYrReturn(Factors):
@@ -226,14 +223,14 @@ class NextYrReturn(Factors):
 
         #check to see if results are empty - molly
         if ticker_data.empty:
-            print(f"{ticker} - not found in market data for {market.t} - SKIPPING")
+            logger.debug(f"{ticker} - not found in market data for {market.t} - SKIPPING")
             return None
         #column in excel sheet is called: 6-Mo Momentum %
         try:
             value = ticker_data['Next-Year\'s Return %'].iloc[-1]
             return value
         except (KeyError, IndexError) as e:
-            print(f"Error accessing Next-Year's Return % for {ticker}: {e}")
+            logger.debug(f"Error accessing Next-Year's Return % for {ticker}: {e}")
             return None
         
 class NextYrActiveReturn(Factors):
@@ -242,14 +239,14 @@ class NextYrActiveReturn(Factors):
 
         #check to see if results are empty - molly
         if ticker_data.empty:
-            print(f"{ticker} - not found in market data for {market.t} - SKIPPING")
+            logger.debug(f"{ticker} - not found in market data for {market.t} - SKIPPING")
             return None
         #column in excel sheet is called: 6-Mo Momentum %
         try:
             value = ticker_data['Next-Year\'s Active Return %'].iloc[-1]
             return value
         except (KeyError, IndexError) as e:
-            print(f"Error accessing Next-Year's Active Return % for {ticker}: {e}")
+            logger.debug(f"Error accessing Next-Year's Active Return % for {ticker}: {e}")
             return None
 
 #Creating an Example
