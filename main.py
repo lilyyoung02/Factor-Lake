@@ -5,19 +5,30 @@ from UserInput import get_factors
 import pandas as pd
 
 # Set up logging to clean up output
-from LoggerConfiguration import get_logger
 import logging
+import sys
+from LoggerConfiguration import get_logger
 import argparse
+
+# Ensure root logger has a stream handler
 root_logger = logging.getLogger()
 if not root_logger.handlers:
-    handler = logging.StreamHandler()
+    handler = logging.StreamHandler(sys.stdout)
     formatter = logging.Formatter('%(levelname)s: %(message)s')
     handler.setFormatter(formatter)
     root_logger.addHandler(handler)
+
+# Parse verbosity from CLI
 parser = argparse.ArgumentParser()
 parser.add_argument('--verbosity', type=str, default='INFO', help='Logging level (DEBUG, INFO, CRITICAL)')
 args = parser.parse_args()
-logger = get_logger(__name__, level=getattr(logging, args.verbosity.upper()))
+
+# Set global logging level
+root_logger.setLevel(getattr(logging, args.verbosity.upper()))
+
+# Get module-specific logger (inherits root's level)
+logger = get_logger(__name__)
+
 
 ##FOR DEBUGGING
 logger.info(f"Logger set to level: {args.verbosity.upper()}")
