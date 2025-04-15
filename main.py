@@ -3,7 +3,7 @@ from portfolio import Portfolio
 from CalculateHoldings import rebalance_portfolio
 from FactorFunction import Momentum6m, ROE, ROA
 import pandas as pd
-from logger_config import get_logger
+from logger_configuration import get_logger
 import argparse
 
 
