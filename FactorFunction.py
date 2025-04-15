@@ -119,7 +119,7 @@ class NextFYrEarns(Factors):
             value = ticker_data['Next FY Earns/P'].iloc[-1]
             return value
         except (KeyError, IndexError) as e:
-            (f"Error accessing Next FY Earns/P for {ticker}: {e}", level = "DEBUG)
+            log(f"Error accessing Next FY Earns/P for {ticker}: {e}", level = "DEBUG)
             return None
         
 class OneYrPriceVol(Factors):
