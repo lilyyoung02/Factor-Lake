@@ -1,0 +1,2 @@
+
+VERBOSITY_LEVEL = "INFO"  # Options: "CRITICAL", "INFO", "DEBUG"
