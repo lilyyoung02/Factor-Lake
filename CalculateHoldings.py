@@ -9,7 +9,7 @@ import numpy as np
 from logger_configuration import get_logger
 import logging
 logger = get_logger(__name__, level=logging.INFO)
-
+f
 def calculate_holdings(factor, aum, market):
     # Factor values for all tickers in the market
     factor_values = {ticker: factor.get(ticker, market) for ticker in market.stocks['Ticker']}
