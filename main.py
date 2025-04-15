@@ -3,17 +3,18 @@ from portfolio import Portfolio
 from CalculateHoldings import rebalance_portfolio
 from UserInput import get_factors
 import pandas as pd
-from LoggerConfiguration import get_logger
+from LoggerConfiguration import set_global_log_level, get_logger
 import logging
 import argparse
 
-
-# Set up logging
 parser = argparse.ArgumentParser()
 parser.add_argument('--verbosity', type=str, default='INFO', help='Logging level (DEBUG, INFO, CRITICAL)')
 args = parser.parse_args()
 
-logger = get_logger(__name__, getattr(logging, args.verbosity.upper()))
+log_level = getattr(logging, args.verbosity.upper(), logging.INFO)
+set_global_log_level(log_level)
+logger = get_logger(__name__)
+
 
 
 def main():
