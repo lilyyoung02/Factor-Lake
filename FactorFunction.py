@@ -1,6 +1,7 @@
 from MarketObject import MarketObject, load_data
 import pandas as pd
 import logging 
+import ipywidgets as widgets
 
 ### setting up loggin package to clean up the output and to allow user to pick level of detail of output
 logger = logging.getLogger()
