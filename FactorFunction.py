@@ -39,8 +39,8 @@ class Momentum6m(Factors):
             value = ticker_data['6-Mo Momentum %'].iloc[-1]
             return value
         except (KeyError, IndexError) as e:
-            #logger.debug(f"Error accessing 6-Mo Momentum % for {ticker}: {e}")
-            print(f"Error accessing 6-Mo Momentum % for {ticker}: {e}")
+            logger.debug(f"Error accessing 6-Mo Momentum % for {ticker}: {e}")
+            #print(f"Error accessing 6-Mo Momentum % for {ticker}: {e}")
             return None
 
 class ROE(Factors):
@@ -57,7 +57,7 @@ class ROE(Factors):
             value = ticker_data['ROE using 9/30 Data'].iloc[-1]
             return value
         except (KeyError, IndexError) as e:
-            print(f"Error accessing 6-Mo Momentum % for {ticker}: {e}")
+            logger.debug(f"Error accessing 6-Mo Momentum % for {ticker}: {e}")
             return None
 
 class ROA(Factors):
@@ -74,7 +74,7 @@ class ROA(Factors):
             value = ticker_data['ROA using 9/30 Data'].iloc[-1]
             return value
         except (KeyError, IndexError) as e:
-            print(f"Error accessing 6-Mo Momentum % for {ticker}: {e}")
+            logger.debug(f"Error accessing 6-Mo Momentum % for {ticker}: {e}")
             return None
 
 #Creating an Example
