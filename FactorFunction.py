@@ -112,7 +112,7 @@ class NextFYrEarns(Factors):
 
         #check to see if results are empty - molly
         if ticker_data.empty:
-            (f"{ticker} - not found in market data for {market.t} - SKIPPING", level = "DEBUG")
+            log(f"{ticker} - not found in market data for {market.t} - SKIPPING", level = "DEBUG")
             return None
         #column in excel sheet is called: 6-Mo Momentum %
         try:
