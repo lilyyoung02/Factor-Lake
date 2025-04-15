@@ -6,37 +6,8 @@ import pandas as pd
 import numpy as np
 
 #imports added for cleaning up the output
-import logging
-import ipywidgets as widgets
-from IPython.display import display
-
-### setting up loggin package to clean up the output and to allow user to pick level of detail of output
-logger = logging.getLogger()
-logger.handlers = []
-handler = logging.StreamHandler()
-formatter = logging.Formatter('%(message)s')
-handler.setFormatter(formatter)
-logger.addHandler(handler)
-logger.setLevel(logging.INFO)
-
-### adding custom labels to the verbosity options
-custom_to_logging = {'Main Data': 'CRITICAL', 'Summary Only': 'INFO','Detailed': 'DEBUG',}
-
-verbosity_dropdown = widgets.Dropdown(
-    options=list(custom_to_logging.keys()),
-    value='Summary Only',
-    description='Verbosity:',
-)
-
-display(verbosity_dropdown)
-
-### added to allow for the verbosity to be dynamically updated
-def update_verbosity(change):
-    new_level = custom_to_logging[change['new']]
-    logger.setLevel(getattr(logging, new_level))
-
-verbosity_dropdown.observe(update_verbosity, names='value')
-
+from logger_config import get_logger
+logger = get_logger(__name__, level=logging.INFO)
 
 def calculate_holdings(factor, aum, market):
     # Factor values for all tickers in the market
