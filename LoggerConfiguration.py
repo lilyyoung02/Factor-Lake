@@ -1,11 +1,12 @@
 import logging
 
-def get_logger(name=None, level=logging.INFO):
+def get_logger(name=None, level=None):
     logger = logging.getLogger(name)
-    if not logger.handlers:  # Prevent duplicate handlers
+    if not logger.handlers:
         handler = logging.StreamHandler()
         formatter = logging.Formatter('%(message)s')
         handler.setFormatter(formatter)
         logger.addHandler(handler)
-    logger.setLevel(level)
+    if level is not None:
+        logger.setLevel(level)
     return logger
