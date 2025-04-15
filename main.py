@@ -8,10 +8,26 @@ import argparse
 # Use custom verbosity manager
 from verbosity_state import vb
 
+# parser = argparse.ArgumentParser()
+# parser.add_argument('--verbosity', type=str, default='INFO')
+# args = parser.parse_args()
+# vb.set_level(args.verbosity)  # Set selected verbosity level
 parser = argparse.ArgumentParser()
 parser.add_argument('--verbosity', type=str, default='INFO')
+parser.add_argument('--fasttest', action='store_true', help='Run a short simulation')
 args = parser.parse_args()
-vb.set_level(args.verbosity)  # Set selected verbosity level
+
+vb.set_level(args.verbosity)
+
+# Set years depending on --fasttest flag
+if args.fasttest:
+    start_year = 2019
+    end_year = 2022
+    vb.info("⚡ Running in FAST mode (2019–2022)...")
+else:
+    start_year = 2002
+    end_year = 2023
+
 
 def main():
     ### Load market data ###
@@ -28,7 +44,8 @@ def main():
 
     ### Rebalancing portfolio across years ###
     print("Rebalancing portfolio...")
-    final_portfolio = rebalance_portfolio(rdata, factors, start_year=2002, end_year=2023, initial_aum=1)
+    # final_portfolio = rebalance_portfolio(rdata, factors, start_year=2002, end_year=2023, initial_aum=1)
+    final_portfolio = rebalance_portfolio(rdata, factors, start_year=start_year, end_year=end_year, initial_aum=1)
 
 if __name__ == "__main__":
     main()
