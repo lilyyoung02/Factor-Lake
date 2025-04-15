@@ -6,6 +6,7 @@ LOG_LEVEL = logging.INFO  # default fallback
 def set_global_log_level(level):
     global LOG_LEVEL
     LOG_LEVEL = level
+    logging.getLogger().setLevel(LOG_LEVEL)
 
 def get_logger(name=None, level=None):
     logger = logging.getLogger(name)
