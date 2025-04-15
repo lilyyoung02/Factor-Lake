@@ -5,10 +5,7 @@ from portfolio import Portfolio
 import pandas as pd
 import numpy as np
 
-#imports added for cleaning up the output
-import logging
-from LoggerConfiguration import get_logger
-logger = get_logger(__name__)
+from verbosity_state import vb
 
 def calculate_holdings(factor, aum, market):
     # Factor values for all tickers in the market
@@ -55,7 +52,7 @@ def calculate_growth(portfolio, next_market, current_market):
                 entry_price = current_market.getPrice(ticker)
                 if entry_price is not None:
                     total_end_value += inv["number_of_shares"] * entry_price
-                    logger.critical(f"{ticker} - Missing in {next_market.t}, liquidating at entry price: {entry_price}")
+                    vb.critical(f"{ticker} - Missing in {next_market.t}, liquidating at entry price: {entry_price}")
                     #print(f"{ticker} - Missing in {next_market.t}, liquidating at entry price: {entry_price}")
 
     # Calculate growth
@@ -69,13 +66,13 @@ def rebalance_portfolio(data, factors, start_year, end_year, initial_aum):
     benchmark_returns = []  # Store benchmark returns for comparison
 
     for year in range(start_year, end_year):
-        logger.critical(f"\nRebalancing Portfolio for {year} based on selected factors")
+        vb.critical(f"\nRebalancing Portfolio for {year} based on selected factors")
         #print(f"\nRebalancing Portfolio for {year} based on factors...")
         market = MarketObject(data.loc[data['Year'] == year], year)
         
         yearly_portfolio = []
         for factor in factors:
-            logger.critical(f"Calculating holdings for factor: {factor.__class__.__name__}")
+            vb.critical(f"Calculating holdings for factor: {factor.__class__.__name__}")
             #print(f"Calculating holdings for factor: {factor.__name__}")
             factor_portfolio = calculate_holdings(
             factor=factor,
@@ -89,7 +86,7 @@ def rebalance_portfolio(data, factors, start_year, end_year, initial_aum):
             growth, total_start_value, total_end_value = calculate_growth(yearly_portfolio, next_market, market)
             
             #print(f"Year {year} to {year + 1}: Growth: {growth:.2%}, Start Value: ${total_start_value:.2f}, End Value: ${total_end_value:.2f}")
-            logger.info(
+            vb.info(
                 f"Year {year} to {year + 1}\n"
                 f"Start Value: ${total_start_value:,.2f} | "
                 f"End Value: ${total_end_value:,.2f} | "
@@ -110,18 +107,18 @@ def rebalance_portfolio(data, factors, start_year, end_year, initial_aum):
     # Calculate overall growth
     overall_growth = (aum - initial_aum) / initial_aum if initial_aum else 0
     
-    logger.critical(f"\nFinal Portfolio Value after {end_year}: ${aum:.2f}")
-    logger.critical(f"Overall Growth from {start_year} to {end_year}: {overall_growth * 100:.2f}%")
+    vb.critical(f"\nFinal Portfolio Value after {end_year}: ${aum:.2f}")
+    vb.critical(f"Overall Growth from {start_year} to {end_year}: {overall_growth * 100:.2f}%")
     #print(f"\nFinal Portfolio Value after {end_year}: ${aum:.2f}")
     #print(f"Overall Growth from {start_year} to {end_year}: {overall_growth * 100:.2f}%")
     
     # Calculate and print Information Ratio
     information_ratio = calculate_information_ratio(portfolio_returns, benchmark_returns)
     if information_ratio is not None:
-        logger.critical(f"Information Ratio: {information_ratio:.4f}")
+        vb.critical(f"Information Ratio: {information_ratio:.4f}")
         #print(f"Information Ratio: {information_ratio:.4f}")
     else:
-        logger.warning("Information Ratio could not be calculated due to zero tracking error.")
+        vb.warning("Information Ratio could not be calculated due to zero tracking error.")
         #print("Information Ratio could not be calculated due to zero tracking error.")
     
     return portfolio_returns, benchmark_returns, aum
